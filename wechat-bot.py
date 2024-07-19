@@ -18,7 +18,7 @@ pyautogui.hotkey('win', 'down')
 cflist = codeforces.get_cf_const()
 cf = cflist[0] + '\n开始时间 -> ' + cflist[1] + '\n比赛地址 -> ' + cflist[2] + '\n'
 # 用户列表
-listen_list = ['Alanbeacker', 'gxt', 'ACM算法竞赛群（23届）', 'bot测试群']
+listen_list = ['Alanbeacker', 'gxt', 'ACM算法竞赛群（23届）', 'bot测试群','wxl','yzh']
 # 加入到监听用户列表
 for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
