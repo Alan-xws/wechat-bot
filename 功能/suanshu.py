@@ -1,14 +1,16 @@
 import pyautogui
 
-wanshan = '功能未完善'
+from 功能 import chartgpt
+
+
 def suan(chat, content):
     try:
         ans = eval(content)
         chat.SendMsg(ans)
         return
     except ZeroDivisionError as e:
-        chat.SendMsg(wanshan)
+        chat.SendMsg(chartgpt.quary(content))
     except SyntaxError as e:
-        chat.SendMsg(wanshan)
+        chat.SendMsg(chartgpt.quary(content))
     except NameError as e:
-        chat.SendMsg(wanshan)
+        chat.SendMsg(chartgpt.quary(content))
