@@ -10,15 +10,10 @@ from 爬虫 import baidufanyi, codeforces, dailyproblem
 # 打开微信客户端
 wx = WeChat()
 pyautogui.hotkey('win', 'down')
-# 爬虫实现爬取https://codeforces.com/contests页面待完善
-# cf='Codeforces Round 960 (Div. 2)\n' \
-#     '开始时间 -> 2024-07-20 22:35\n' \
-#     '比赛时长 -> 02:00\n' \
-#     '比赛地址 -> https://codeforces.com/contests/1990'\
-cflist = codeforces.get_cf_const()
-cf = cflist[0] + '\n开始时间 -> ' + cflist[1] + '\n比赛地址 -> ' + cflist[2] + '\n'
+# cf竞赛
+cf = '待更新'
 # 用户列表
-listen_list = ['Alanbeacker', 'gxt', 'ACM算法竞赛群（23届）', 'bot测试群','wxl','yzh']
+listen_list = ['Alanbeacker', 'gxt', 'ACM算法竞赛群（23届）', 'bot测试群', 'wxl', 'yzh']
 # 加入到监听用户列表
 for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
@@ -33,9 +28,9 @@ while True:
         for msg in one_msgs:
             msgtype = msg.type
             content = msg.content
-            if(content[0]!='#'):
+            if (content[0] != '#'):
                 continue
-            content=content[1:]
+            content = content[1:]
             print(f'【{who}】：{content}')
             # 回复cf
             if msgtype == 'friend' and content == 'cf':
@@ -47,7 +42,7 @@ while True:
                 pyautogui.hotkey('win', 'down')
             # 更新cf数据
             elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and content == 'updatecf':
-                updatecf.updatecf(chat)
+                cf = updatecf.updatecf(chat)
                 pyautogui.hotkey('win', 'down')
             # 加入用户监听
             elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and 'add' in content:
