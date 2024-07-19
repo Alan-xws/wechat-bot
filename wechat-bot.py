@@ -5,7 +5,7 @@ from wxauto import *
 from 功能 import replyfanyi, updatecf
 from 功能 import adduser
 from 功能 import suanshu
-from 爬虫 import baidufanyi, codeforces
+from 爬虫 import baidufanyi, codeforces, dailyproblem
 
 # 打开微信客户端
 wx = WeChat()
@@ -52,6 +52,10 @@ while True:
             # 加入用户监听
             elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and 'add' in content:
                 adduser.add(content, wx)
+                pyautogui.hotkey('win', 'down')
+            # 输出灵茶每日一题
+            elif msgtype == 'friend' and content == '每日茶':
+                dailyproblem.get0x3f(chat)
                 pyautogui.hotkey('win', 'down')
             elif msgtype == 'friend':
                 suanshu.suan(chat, content)
