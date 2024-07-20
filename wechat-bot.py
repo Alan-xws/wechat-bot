@@ -1,4 +1,6 @@
 import time
+import random
+
 import pyautogui
 from wxauto import *
 
@@ -12,7 +14,7 @@ pyautogui.hotkey('win', 'down')
 # cf竞赛
 cf = '待更新'
 # 输出atcoder长度
-atlen = 1
+atlen = 3
 # 用户列表
 listen_list = ['Alanbeacker', 'gxt', 'bot测试群']
 # 加入到监听用户列表
@@ -20,6 +22,10 @@ for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
 # 刷新时间
 wait = 1
+# 关机 code
+guanjicode = random.randint(1, 1000)
+wx.SendMsg('关机密码' + str(guanjicode), 'Alanbeacker')
+pyautogui.hotkey('win', 'down')
 while True:
     # 打开监听页面
     msgs = wx.GetListenMessage()
@@ -54,8 +60,16 @@ while True:
             elif msgtype == 'friend' and content == 'atcoder':
                 atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
+            # 关机+code
+            elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(
+                    guanjicode):
+                chat.SendMsg('主人再见')
+                pyautogui.hotkey('win', 'down')
+                exit()
             # gpt 回复
             elif msgtype == 'friend':
+                chat.SendMsg('思考中...')
+                pyautogui.hotkey('win', 'down')
                 bot.gpt(chat, content)
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
