@@ -61,14 +61,13 @@ while True:
                 atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
             # 关机+code
-            elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(password):
+            elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(
+                    password):
                 chat.SendMsg('主人再见')
                 pyautogui.hotkey('win', 'down')
                 exit()
             # gpt 回复
             elif msgtype == 'friend' and len(content) > 16 and content[:16] == '@Alanbeacker-Bot':
-                chat.SendMsg('思考中...')
-                pyautogui.hotkey('win', 'down')
-                bot.gpt(chat, content[16:])
+                bot.gpt(chat, msg, content[16:])
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
