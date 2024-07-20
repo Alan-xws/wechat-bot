@@ -30,17 +30,14 @@ while True:
             msgtype = msg.type
             content = msg.content
             print(f'【{who}】：{content}')
-            if (content[0] != '#'):
-                continue
-            content = content[1:]
             # 回复cf
             if msgtype == 'friend' and content == 'cf':
                 chat.SendMsg(cf)
                 pyautogui.hotkey('win', 'down')
             # 回复翻译
-            elif msgtype == 'friend' and len(content) >= 2 and content[0:2] == '翻译':
-                replyfanyi.fanyi(chat, content)
-                pyautogui.hotkey('win', 'down')
+            # elif msgtype == 'friend' and len(content) >= 2 and content[0:2] == '翻译':
+            #     replyfanyi.fanyi(chat, content)
+            #     pyautogui.hotkey('win', 'down')
             # 更新cf数据
             elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and content == 'updatecf':
                 cf = updatecf.updatecf(chat)
@@ -53,10 +50,12 @@ while True:
             elif msgtype == 'friend' and content == '每日茶':
                 dailyproblem.get0x3f(chat)
                 pyautogui.hotkey('win', 'down')
+            # 回复 atcoder
             elif msgtype == 'friend' and content == 'atcoder':
                 atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
+            # gpt 回复
             elif msgtype == 'friend':
-                bot.suan(chat, content)
+                bot.gpt(chat, content)
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
