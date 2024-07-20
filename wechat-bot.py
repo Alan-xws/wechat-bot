@@ -14,7 +14,7 @@ pyautogui.hotkey('win', 'down')
 # cf竞赛
 cf = '待更新'
 # 输出atcoder长度
-atlen = 3
+atlen = 1
 # 用户列表
 listen_list = ['Alanbeacker', 'gxt', 'bot测试群']
 # 加入到监听用户列表
@@ -23,8 +23,8 @@ for user in listen_list:
 # 刷新时间
 wait = 1
 # 关机 code
-guanjicode = random.randint(1, 1000)
-wx.SendMsg('关机密码' + str(guanjicode), 'Alanbeacker')
+password = random.randint(1, 1000)
+wx.SendMsg('关机密码' + str(password), 'Alanbeacker')
 pyautogui.hotkey('win', 'down')
 while True:
     # 打开监听页面
@@ -45,13 +45,13 @@ while True:
             #     replyfanyi.fanyi(chat, content)
             #     pyautogui.hotkey('win', 'down')
             # 更新cf数据
-            elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and content == 'updatecf':
+            elif msgtype == 'friend' and content == 'updatecf' + str(password):
                 cf = updatecf.updatecf(chat)
                 pyautogui.hotkey('win', 'down')
             # 加入用户监听
-            elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and 'add' in content:
-                adduser.add(content, wx)
-                pyautogui.hotkey('win', 'down')
+            # elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and 'add' in content:
+            #     adduser.add(content, wx)
+            #     pyautogui.hotkey('win', 'down')
             # 输出灵茶每日一题
             elif msgtype == 'friend' and content == '每日茶':
                 dailyproblem.get0x3f(chat)
@@ -61,15 +61,14 @@ while True:
                 atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
             # 关机+code
-            elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(
-                    guanjicode):
+            elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(password):
                 chat.SendMsg('主人再见')
                 pyautogui.hotkey('win', 'down')
                 exit()
             # gpt 回复
-            elif msgtype == 'friend':
+            elif msgtype == 'friend' and len(content) > 16 and content[:16] == '@Alanbeacker-Bot':
                 chat.SendMsg('思考中...')
                 pyautogui.hotkey('win', 'down')
-                bot.gpt(chat, content)
+                bot.gpt(chat, content[16:])
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
