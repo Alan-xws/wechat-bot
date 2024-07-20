@@ -40,7 +40,7 @@ def addt(s):
     return f'{sl[0]} {sll[0]}:{sll[1]}:{sll[2]}'
 
 
-def at(chat, atlen):
+def at(chat):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
     }
@@ -53,10 +53,12 @@ def at(chat, atlen):
         addres.pop(0)
     for i in range(len(addres) - 2, -1, -2):
         addres.pop(i)
-    ans = ''
-    for i in range(min(len(data), atlen)):
+    ans = []
+    for i in range(len(data)):
         d = data[i]
         now = datetime.now()
         if cut(str(d)) + '1:00' > now.strftime('%Y-%m-%d %H:%M:%S'):
-            ans += f'{cut1(str(addres[i]))}\n比赛时间 -> {addt(cut(str(d)))[:-3]}\n比赛地址 -> https://atcoder.jp{cut2(str(addres[i]))}\n\n'
-    chat.SendMsg(ans)
+            ans.append(
+                f'{cut1(str(addres[i]))}\n比赛时间 -> {addt(cut(str(d)))[:-3]}\n比赛地址 -> https://atcoder.jp{cut2(str(addres[i]))}\n\n')
+    chat.SendMsg('更新成功')
+    return ans

@@ -16,16 +16,18 @@ cf = '待更新'
 # 输出atcoder长度
 atlen = 1
 # 用户列表
-listen_list = ['Alanbeacker', 'gxt', 'bot测试群']
+listen_list = ['Alanbeacker', 'gxt', 'bot测试群', 'ACM算法竞赛群（23届）']
 # 加入到监听用户列表
 for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
 # 刷新时间
 wait = 1
 # 关机 code
+atcoderlist = []
 password = random.randint(1, 1000)
-wx.SendMsg('关机密码' + str(password), 'Alanbeacker')
+wx.SendMsg('密码' + str(password), 'Alanbeacker')
 pyautogui.hotkey('win', 'down')
+gptf = 1
 while True:
     # 打开监听页面
     msgs = wx.GetListenMessage()
@@ -49,16 +51,29 @@ while True:
                 cf = updatecf.updatecf(chat)
                 pyautogui.hotkey('win', 'down')
             # 加入用户监听
-            # elif msgtype == 'friend' and (who == 'Alanbeacker' or who == 'gxt') and 'add' in content:
-            #     adduser.add(content, wx)
-            #     pyautogui.hotkey('win', 'down')
+            elif msgtype == 'friend' and who == 'Alanbeacker' and len(content) > 4 and content[
+                                                                                       :4] == 'add ':
+                adduser.add(content, wx)
+                pyautogui.hotkey('win', 'down')
             # 输出灵茶每日一题
             elif msgtype == 'friend' and content == '每日茶':
                 dailyproblem.get0x3f(chat)
                 pyautogui.hotkey('win', 'down')
-            # 回复 atcoder
-            elif msgtype == 'friend' and content == 'atcoder':
-                atcoder.at(chat, atlen)
+            # 更新 atcoder
+            elif msgtype == 'friend' and content == 'updateat' + str(password):
+                atcoderlist = atcoder.at(chat)
+
+                pyautogui.hotkey('win', 'down')
+            elif msgtype == 'friend' and len(content) > 8 and content[:8] == 'atcoder ':
+                try:
+                    sl = content.split(" ")
+                    atlen = eval(sl[1])
+                except:
+                    atlen = 1
+                ans = ''
+                for i in range(min(atlen, len(atcoderlist))):
+                    ans += atcoderlist[i]
+                chat.SendMsg(ans)
                 pyautogui.hotkey('win', 'down')
             # 关机+code
             elif msgtype == 'friend' and len(content) > 2 and content[:2] == '关机' and content == '关机' + str(
@@ -67,7 +82,11 @@ while True:
                 pyautogui.hotkey('win', 'down')
                 exit()
             # gpt 回复
-            elif msgtype == 'friend' and len(content) > 16 and content[:16] == '@Alanbeacker-Bot':
-                bot.gpt(chat, msg, content[16:])
+            elif msgtype == 'friend' and len(content) > 17 and content[:17] == '@Alanbeacker-Bot ':
+                if content[17:] == '换个风格':
+                    gptf += 1
+                    chat.SendMsg('@' + msg.sender_remark + " " + '换好了')
+                else:
+                    bot.gpt(chat, msg, content[17:], gptf)
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
