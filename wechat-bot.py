@@ -2,11 +2,9 @@ import time
 import pyautogui
 from wxauto import *
 
-from 功能 import replyfanyi, updatecf
+from 功能 import replyfanyi, updatecf, bot
 from 功能 import adduser
-from 功能 import suanshu
-from 功能 import atcoder
-from 爬虫 import baidufanyi, codeforces, dailyproblem
+from 爬虫 import dailyproblem, atcoder
 
 # 打开微信客户端
 wx = WeChat()
@@ -59,6 +57,6 @@ while True:
                 atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
             elif msgtype == 'friend':
-                suanshu.suan(chat, content)
+                bot.suan(chat, content)
                 pyautogui.hotkey('win', 'down')
     time.sleep(wait)
