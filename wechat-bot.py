@@ -64,7 +64,7 @@ while True:
                 atcoderlist = atcoder.at(chat)
 
                 pyautogui.hotkey('win', 'down')
-            elif msgtype == 'friend' and len(content) > 8 and content[:8] == 'atcoder ':
+            elif msgtype == 'friend' and len(content) >= 7 and content[:7] == 'atcoder':
                 try:
                     sl = content.split(" ")
                     atlen = eval(sl[1])
@@ -73,6 +73,7 @@ while True:
                 ans = ''
                 for i in range(min(atlen, len(atcoderlist))):
                     ans += atcoderlist[i]
+                if ans == '': ans = '请更新'
                 chat.SendMsg(ans)
                 pyautogui.hotkey('win', 'down')
             # 关机+code
