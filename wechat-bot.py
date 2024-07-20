@@ -90,3 +90,4 @@ while True:
                 else:
                     bot.gpt(chat, msg, content[17:], gptf)
                 pyautogui.hotkey('win', 'down')
+    time.sleep(wait)
