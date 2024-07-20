@@ -51,9 +51,9 @@ while True:
                 cf = updatecf.updatecf(chat)
                 pyautogui.hotkey('win', 'down')
             # 加入用户监听
-            elif msgtype == 'friend' and who == 'Alanbeacker' and len(content) > 4 and content[
-                                                                                       :4] == 'add ':
-                adduser.add(content, wx)
+            elif msgtype == 'friend' and who == 'Alanbeacker' and len(content) > 3 and content[
+                                                                                       :3] == 'add':
+                adduser.add(content, wx, chat)
                 pyautogui.hotkey('win', 'down')
             # 输出灵茶每日一题
             elif msgtype == 'friend' and content == '每日茶':
@@ -73,7 +73,7 @@ while True:
                 ans = ''
                 for i in range(min(atlen, len(atcoderlist))):
                     ans += atcoderlist[i]
-                if ans == '': ans = '请更新'
+                if ans == '': ans = '待更新'
                 chat.SendMsg(ans)
                 pyautogui.hotkey('win', 'down')
             # 关机+code
@@ -83,11 +83,10 @@ while True:
                 pyautogui.hotkey('win', 'down')
                 exit()
             # gpt 回复
-            elif msgtype == 'friend' and len(content) > 17 and content[:17] == '@Alanbeacker-Bot ':
+            elif msgtype == 'friend' and len(content) > 16 and content[:16] == '@Alanbeacker-Bot':
                 if content[17:] == '换个风格':
                     gptf += 1
                     chat.SendMsg('@' + msg.sender_remark + " " + '换好了')
                 else:
                     bot.gpt(chat, msg, content[17:], gptf)
                 pyautogui.hotkey('win', 'down')
-    time.sleep(wait)
