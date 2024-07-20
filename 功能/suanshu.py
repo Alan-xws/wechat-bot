@@ -6,7 +6,7 @@ from 功能 import chartgpt
 def suan(chat, content):
     try:
         ans = eval(content)
-        chat.SendMsg(content + '=' + ans)
+        chat.SendMsg(content + '=' + str(ans))
         return
     except ZeroDivisionError as e:
         chat.SendMsg(chartgpt.quary(content))

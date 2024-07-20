@@ -5,6 +5,7 @@ from wxauto import *
 from 功能 import replyfanyi, updatecf
 from 功能 import adduser
 from 功能 import suanshu
+from 功能 import atcoder
 from 爬虫 import baidufanyi, codeforces, dailyproblem
 
 # 打开微信客户端
@@ -12,8 +13,10 @@ wx = WeChat()
 pyautogui.hotkey('win', 'down')
 # cf竞赛
 cf = '待更新'
+# 输出atcoder长度
+atlen = 1
 # 用户列表
-listen_list = ['Alanbeacker', 'gxt', 'ACM算法竞赛群（23届）', 'bot测试群', 'wxl', 'yzh']
+listen_list = ['Alanbeacker', 'gxt', 'bot测试群']
 # 加入到监听用户列表
 for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
@@ -28,10 +31,10 @@ while True:
         for msg in one_msgs:
             msgtype = msg.type
             content = msg.content
+            print(f'【{who}】：{content}')
             if (content[0] != '#'):
                 continue
             content = content[1:]
-            print(f'【{who}】：{content}')
             # 回复cf
             if msgtype == 'friend' and content == 'cf':
                 chat.SendMsg(cf)
@@ -51,6 +54,9 @@ while True:
             # 输出灵茶每日一题
             elif msgtype == 'friend' and content == '每日茶':
                 dailyproblem.get0x3f(chat)
+                pyautogui.hotkey('win', 'down')
+            elif msgtype == 'friend' and content == 'atcoder':
+                atcoder.at(chat, atlen)
                 pyautogui.hotkey('win', 'down')
             elif msgtype == 'friend':
                 suanshu.suan(chat, content)
