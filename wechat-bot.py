@@ -4,7 +4,7 @@ import random
 # import pyautogui
 from wxauto import *
 
-from 功能 import replyfanyi, updatecf, bot
+from 功能 import replyfanyi, updatecf, bot, todo
 from 功能 import adduser
 from 爬虫 import dailyproblem, atcoder
 
@@ -15,7 +15,7 @@ cf = '待更新'
 # 输出atcoder长度
 atlen = 1
 # 用户列表
-listen_list = ['Alanbeacker', 'gxt', 'bot测试群', 'ACM算法竞赛群（23届）']
+listen_list = ['bot测试群']
 # 加入到监听用户列表
 for user in listen_list:
     wx.AddListenChat(who=user, savepic=False)
@@ -72,8 +72,24 @@ while True:
                         password):
                     chat.SendMsg('主人再见')
                     exit()
+                elif msgtype == 'friend' and len(content) > 7 and content[:7] == 'addtodo':
+                    todo.addtodo(str(msg.sender_remark), content[7:])
+                    chat.SendMsg('@' + msg.sender_remark + " " + '添加成功')
+                elif msgtype == 'friend' and content == 'deltodo':
+                    todo.deltodo(str(msg.sender_remark))
+                    chat.SendMsg('@' + msg.sender_remark + " " + '清空成功')
+                elif msgtype == 'friend' and content == 'outtodo':
+                    msgdata = todo.outtodo(str(msg.sender_remark))
+                    msgto = '@' + msg.sender_remark + '\n'
+                    x = 1
+                    for data in msgdata:
+                        msgto += str(x) + '.' + data + "\n"
+                        x += 1
+                    print(msgto)
+                    chat.SendMsg(msgto)
                 # gpt 回复
-                elif msgtype == 'friend' and len(content) > 16 and content[:16] == '@Alanbeacker-Bot':
+                elif msgtype == 'friend' and len(content) > len(str(wx.nickname)) + 1 and content[:len(str(
+                        wx.nickname)) + 1] == '@' + str(wx.nickname):
                     if content[17:] == '换个风格':
                         gptf += 1
                         chat.SendMsg('@' + msg.sender_remark + " " + '换好了')
