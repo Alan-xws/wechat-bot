@@ -8,5 +8,5 @@ def quary(s):
         js = sess.text
         js = json.loads(js)
         return js['data']['reply']
-    except KeyError as e:
-        return '主人我不会'
+    except:
+        return "不好意思主人我出错了"

@@ -20,8 +20,10 @@ def gt(s):
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     s = response.json()
-    return s["result"]
-
+    try:
+        return s["result"]
+    except:
+        return "不好意思主人我出错了"
 
 def get_access_token():
     """
