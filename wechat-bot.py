@@ -15,9 +15,16 @@ cf = '待更新'
 # 输出atcoder长度
 atlen = 1
 # 用户列表
-listen_list = ['bot测试群']
+listen_list = []
+friends = wx.GetAllFriends()
+for friend in friends:
+    if friend['remark'] is not None:
+        listen_list.append(friend['remark'])
+    else:
+        listen_list.append(friend['nickname'])
 # 加入到监听用户列表
 for user in listen_list:
+    print(user)
     wx.AddListenChat(who=user, savepic=False)
 # 刷新时间
 wait = 1
@@ -47,8 +54,8 @@ while True:
                 elif msgtype == 'friend' and content == 'updatecf' + str(password):
                     cf = updatecf.updatecf(chat)
                 # 加入用户监听
-                elif msgtype == 'friend' and who == 'Alanbeacker' and len(content) > 3 and content[
-                                                                                           :3] == 'add':
+                elif msgtype == 'friend' and who == 'Alanbeacker' and len(content) > 7 and content[
+                                                                                           :7] == 'adduser':
                     adduser.add(content, wx, chat)
                 # 输出灵茶每日一题
                 elif msgtype == 'friend' and content == '每日茶':
@@ -88,13 +95,16 @@ while True:
                     print(msgto)
                     chat.SendMsg(msgto)
                 # gpt 回复
-                elif msgtype == 'friend' and len(content) > len(str(wx.nickname)) + 1 and content[:len(str(
-                        wx.nickname)) + 1] == '@' + str(wx.nickname):
-                    if content[17:] == '换个风格':
+                elif msgtype == 'friend' and (len(content) > len(str(wx.nickname)) + 1 and content[:len(str(
+                        wx.nickname)) + 1] == '@' + str(wx.nickname) or msg.sender_remark == who):
+                    if content[len(str(wx.nickname)) + 2:] == '换个风格':
                         gptf += 1
                         chat.SendMsg('@' + msg.sender_remark + " " + '换好了')
                     else:
-                        bot.gpt(chat, msg, content[17:], gptf)
+                        if msg.sender_remark == who:
+                            bot.gpt(chat, msg, who, content, gptf)
+                        else:
+                            bot.gpt(chat, msg, who, content[len(str(wx.nickname)) + 2:], gptf)
             except:
-                chat.SendMsg('主人我出错了')
+                print('出错')
     time.sleep(wait)
